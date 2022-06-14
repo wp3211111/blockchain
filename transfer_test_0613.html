@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>transfer test 0504</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="myjs.js" ></script>
+<script src="TronWeb.js" ></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+<link rel="stylesheet" href="https://7npmedia.w3cschool.cn/w3.css">
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+
+  <style>
+  .pauseWrap{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+  .button,.buttonTransfer,.pauseBtn,.startDetect {
+      background-color: #66CCFF;
+      border: none;
+      color: white;
+      padding: 5px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      margin: 0px 0px;
+      cursor: pointer;
+
+  }
+  .stopDetect{
+      background-color: #dc3545;
+      border: none;
+      color: white;
+      padding: 5px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 15px;
+      margin: 0px 0px;
+      cursor: pointer;
+  }
+  #remaiaS,#USDTbal,#notice{
+   font-size: 25px;
+    color: #f00;
+  }
+  .red{
+      color: #dc3545;
+  }
+  .green{
+      color: #198754; 
+  }
+  .balance{
+        width: 300px;
+  }
+  .blanceAmount{
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+  }
+  .blanceAmount span{
+        font-size: 160px;
+        display: inline-block;
+        height: 200px;
+        line-height: 200px;
+  }
+  </style>
+
+
+</head>
+<body style="background-color:rgb(232,232,232)">
+
+<div class="w3-container">
+
+    <h2>欢迎来到数字货币转账交易!</h2>
+
+
+
+              <table class="w3-table w3-striped">
+                  <tr>
+                      <th>钱包地址</th>
+                      <th>查询</th>
+                      <th>余额</th>
+                      <th>合约地址（填写币种对应合约）</th>
+                      <th>转入地址</th>
+                      <th>金额</th>
+                      <th>时间</th>
+                      <th>启动</th>
+                      <th></th>
+                  </tr>
+                  <tr class="trItem">
+                      <td>
+                            <input id="add_bal" list="addList"   size ="40" style="height: 35px " value="" placeholder ="钱包地址">
+                                      <datalist id="addList" >
+                                                  <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                                  <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo66666">欢乐单双投注地址</option>
+                                      </datalist>
+                      </td>
+                      <td>
+                            <button class="buttonTransfer" >查询余额</button>
+                      </td>
+                      <td>
+                            <p id="USDTbal"></p>
+
+                      </td>
+                      <td>
+                            <input id="conLists" list="conList" value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"   size ="40" style="height: 35px " placeholder ="合约地址">
+                                      <datalist id="conList" >
+                                                  <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                            </datalist>
+                      </td>
+                      <td>
+                            <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                    <datalist id="toAddList" >
+                                      <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                      <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+
+                                    </datalist>
+                      </td>
+                      <td>
+                            <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " >
+                      </td>
+                      <td>
+                        <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " >
+                      </td>
+                      <td>
+                            <button class="button" index="0" >转账</button>
+                      </td>
+                      <td>
+                            <span id="remaiaS"></span>
+                      </td>
+                  </tr>
+                  <tr  class="trItem">
+                        <td>
+                              <input id="add_bal" list="addList"   size ="40" style="height: 35px " value=""  placeholder ="钱包地址">
+                                        <datalist id="addList" >
+                                                    <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+  
+                                        </datalist>
+                        </td>
+                        <td>
+                              <button class="buttonTransfer" >查询余额</button>
+                        </td>
+                        <td>
+                              <p id="USDTbal"></p>
+  
+                        </td>
+                        <td>
+                              <input id="conLists" list="conList" value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"   size ="40" style="height: 35px " placeholder ="合约地址">
+                                        <datalist id="conList" >
+                                                    <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                              </datalist>
+                        </td>
+                        <td>
+                              <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                      <datalist id="toAddList" >
+                                        <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                        <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+  
+                                      </datalist>
+                        </td>
+                        <td>
+                              <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                          <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                              <button class="button" index="1" >转账</button>
+                        </td>
+                        <td>
+                              <span id="remaiaS"></span>
+                        </td>
+                  </tr>
+                  <tr  class="trItem">
+                        <td>
+                              <input id="add_bal" list="addList"   size ="40" style="height: 35px " value="" placeholder ="钱包地址">
+                                        <datalist id="addList" >
+                                                    <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+  
+                                        </datalist>
+                        </td>
+                        <td>
+                              <button class="buttonTransfer" >查询余额</button>
+                        </td>
+                        <td>
+                              <p id="USDTbal"></p>
+  
+                        </td>
+                        <td>
+                              <input id="conLists" list="conList" value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"   size ="40" style="height: 35px " placeholder ="合约地址">
+                                        <datalist id="conList" >
+                                                    <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                              </datalist>
+                        </td>
+                        <td>
+                              <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                      <datalist id="toAddList" >
+                                        <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                        <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+  
+                                      </datalist>
+                        </td>
+                        <td>
+                              <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                          <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                              <button class="button" index="2" >转账</button>
+                        </td>
+                        <td>
+                              <span id="remaiaS"></span>
+                        </td>
+                  </tr>
+                  <tr  class="trItem">
+                        <td>
+                              <input id="add_bal" list="addList"   size ="40" style="height: 35px " value="" placeholder ="钱包地址">
+                                        <datalist id="addList" >
+                                                    <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+  
+                                        </datalist>
+                        </td>
+                        <td>
+                              <button class="buttonTransfer" >查询余额</button>
+                        </td>
+                        <td>
+                              <p id="USDTbal"></p>
+  
+                        </td>
+                        <td>
+                              <input id="conLists" list="conList" value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"   size ="40" style="height: 35px " placeholder ="合约地址">
+                                        <datalist id="conList" >
+                                                    <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                              </datalist>
+                        </td>
+                        <td>
+                              <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                      <datalist id="toAddList" >
+                                        <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                        <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+  
+                                      </datalist>
+                        </td>
+                        <td>
+                              <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                          <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                              <button class="button" index="3" >转账</button>
+                        </td>
+                        <td>
+                              <span id="remaiaS"></span>
+                        </td>
+                  </tr>
+                  <tr  class="trItem">
+                        <td>
+                              <input id="add_bal" list="addList"   size ="40" style="height: 35px " value="" placeholder ="钱包地址">
+                                        <datalist id="addList" >
+                                                    <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+  
+                                        </datalist>
+                        </td>
+                        <td>
+                              <button class="buttonTransfer" >查询余额</button>
+                        </td>
+                        <td>
+                              <p id="USDTbal"></p>
+  
+                        </td>
+                        <td>
+                              <input id="conLists" list="conList" value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"   size ="40" style="height: 35px " placeholder ="合约地址">
+                                        <datalist id="conList" >
+                                                    <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                              </datalist>
+                        </td>
+                        <td>
+                              <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                      <datalist id="toAddList" >
+                                        <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                        <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+  
+                                      </datalist>
+                        </td>
+                        <td>
+                              <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                          <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " >
+                        </td>
+                        <td>
+                              <button class="button" index="4" >转账</button>
+                        </td>
+                        <td>
+                              <span id="remaiaS"></span>
+                        </td>
+                  </tr>
+              </table>
+
+            <div class="pauseWrap">
+                 <span class="pauseBtn">
+                  暂停
+                 </span> 
+            </div>
+
+
+            <table class="w3-table w3-striped">
+                  <tr>
+                      <th>钱包地址</th>
+                      <th>查询</th>
+                      <!-- <th>余额</th> -->
+                      <th>监控值</th>
+                      <!-- <th>转入地址</th>
+                      <th>金额</th>
+                      <th>时间</th> -->
+                      <th>操作</th>
+                      <th>提示</th>
+                  </tr>
+                  <tr class="trItem">
+                        <td>
+                              <input id="add_bal" list="addList"  size ="40" style="height: 35px " value="" placeholder ="钱包地址">
+                                        <datalist id="addList" >
+                                                    <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                                    <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">欢乐单双投注地址</option>
+                                        </datalist>
+                        </td>
+                        <td>
+                              <button class="startDetect" >开始检测</button>
+                        </td>
+                        <!-- <td class="balance">
+                              <p id="blance"></p>
+  
+                        </td> -->
+                        <td>
+                              <input id="checkVal" list="conList" value="100000"   size ="20" style="height: 35px " placeholder ="请输入监控值">
+                                        <!-- <datalist id="conList" >
+                                                    <option value="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t">USDT</option>
+                                              </datalist> -->
+                        </td>
+                        <!-- <td>
+                             <input id="toAddLists" list="toAddList" value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888"  size ="40" style="height: 35px " placeholder ="转入地址">
+                                      <datalist id="toAddList" >
+                                        <option value="TJTg6ksYuk7RfbBg4rmYYDU5DtRVo88888">欢乐单双投注地址</option>
+                                        <option value="TGH8CEvEiD5ptJNSzeRSxguKyymjv55555">哈希牛牛投注地址</option>
+  
+                                      </datalist> -->
+                        </td>
+                         <!-- <td>
+                             <input class="placeholder" placeholder ="金额" type = "number" id="amount" value="10" name="s"  autocomplete="off"  style="height: 35px;width:80px " > 
+                        </td>-->
+                         <!--<td>
+                          <input class="timers" placeholder ="多少秒" type = "number" id="timer" value="60"  style="height: 35px;width:80px " > 
+                        </td> -->
+                        <td>
+                              <button class="stopDetect"  >停止监控</button>
+                        </td>
+                          <td>
+                            <span id="notice"></span>
+                        </td>
+                    </tr>
+            </table>
+
+            <div class="blanceAmount">
+                  <span id="blance"></span>
+            </div>
+
+
+</div>
+
+
+
+
+</body>
+</html>
